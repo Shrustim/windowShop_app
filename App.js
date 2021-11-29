@@ -1,90 +1,130 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
- import 'react-native-gesture-handler';
- import * as React from 'react';
- import { Button, Text, View,StyleSheet } from 'react-native';
- import { NavigationContainer } from '@react-navigation/native';
- import { createStackNavigator } from '@react-navigation/stack';
- import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+import * as React from 'react';
+import { Button, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import HomeScreenn from "./src/HomeScreen";
-import LoginScreen from "./src/LoginScreen";
 import ProductList from "./src/ProductList";
 import ProductDetail from "./src/ProductDetail";
-import ProfileScreen from "./src/ProfileScreen";
-import Cart from "./src/Cart";
+
 import Register from "./src/Register";
+import LoginScreen from "./src/LoginScreen";
 
-
-function CustomDrawerContent(props) {
+import Cart from "./src/Cart";
+import TabNavigator from "./src/TabNavigator";
+function DetailsScreen({ navigation }) {
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem
-        label="Close drawer"
-        onPress={() => props.navigation.closeDrawer()}
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Details!</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Home')}
       />
-      <DrawerItem
-        label="Toggle drawer"
-        onPress={() => props.navigation.toggleDrawer()}
-      />
-    </DrawerContentScrollView>
+    </View>
   );
 }
 
+// function HomeScreen({ navigation }) {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Home screen</Text>
+//       <Button
+//         title="Go to Details"
+//         onPress={() => navigation.navigate('ProductList')}
+//       />
+//     </View>
+//   );
+// }
 
+function SettingsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Settings screen</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Home')}
+      />
+    </View>
+  );
+}
 
+// const HomeStack = createNativeStackNavigator();
 
+// function HomeStackScreen() {
+//   return (
+//     <HomeStack.Navigator>
+//       <HomeStack.Screen name="Home" component={HomeScreenn} />
+//       <HomeStack.Screen name="ProductList" component={ProductList} />
+//       <HomeStack.Screen name="ProductDetail" component={ProductDetail} />
+//       <HomeStack.Screen name="Cart" component={Cart} />
+//     </HomeStack.Navigator>
+//   );
+// }
+
+const SettingsStack = createNativeStackNavigator();
+
+function SettingsStackScreen() {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+      <SettingsStack.Screen name="Details" component={DetailsScreen} />
+    </SettingsStack.Navigator>
+  );
+}
+
+// const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-function App() {
-  
+// const TabNavigator = () => {
+//   return(
+//     <Tab.Navigator 
+//     screenOptions={({ route }) => ({
+//       tabBarIcon: ({ focused, color, size }) => {
+//         let iconName;
+
+//         if (route.name === 'Home') {
+//           iconName = focused
+//             ? 'home'
+//             : 'home';
+//         } else if (route.name === 'Profile') {
+//           iconName = focused ? 'user' : 'user';
+//         }
+//         else if (route.name === 'Orders') {
+//           iconName = focused ? 'list' : 'list';
+//         }
+
+//         // You can return any component that you like here!
+//         return <Icon name={iconName} size={size} color={color} /> ;
+//       },
+//       tabBarActiveTintColor: 'tomato',
+//       tabBarInactiveTintColor: 'gray',
+//       headerShown: false 
+//     })}
+//     //  screenOptions={{ headerShown: false }}
+//      > 
+//     <Tab.Screen name="Home" component={HomeStackScreen} />
+//     <Tab.Screen name="Profile" component={SettingsStackScreen} />
+//     <Tab.Screen name="Orders" component={SettingsStackScreen} />
+//   </Tab.Navigator>
+//   )
+// }
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator screenOptions={{ headerShown: false }}>
+      <Drawer.Screen name="HomeDrawer" component={TabNavigator} />
+      <Drawer.Screen name="ContactDrawer" component={SettingsStackScreen} />
+      <Drawer.Screen name="Register" component={Register} />
+      <Drawer.Screen name="LoginScreen" component={LoginScreen} />
+    </Drawer.Navigator>
+  );
+}
+export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Decorate" drawerContent={props => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Decorate" component={HomeScreenn} />
-        <Drawer.Screen name="ProductList" component={ProductList} />
-        <Drawer.Screen name="ProductDetail" component={ProductDetail} />
-        <Drawer.Screen name="Cart" component={Cart} />
-        <Drawer.Screen name="Login" component={LoginScreen} />
-        <Drawer.Screen name="Registration" component={Register} />
-        <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
-        <Drawer.Screen name="PlaceOrder" component={ProfileScreen} />
-        <Drawer.Screen name="OrderDetail" component={ProfileScreen} />
-      </Drawer.Navigator>
+     <DrawerNavigator  />
     </NavigationContainer>
   );
 }
-export default App;
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-   backgroundColor:'white',
-   padding : 100 ,
-   margin : 20 ,
-   height: '100%'
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-

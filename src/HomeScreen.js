@@ -1,5 +1,5 @@
 import  React,{useState} from 'react';
-import { Button, Text, View,Image,TextInput ,ScrollView    } from 'react-native';
+import { Button, Text, View,Image,TextInput ,ScrollView ,TouchableOpacity   } from 'react-native';
 import Neumorphism from 'react-native-neumorphism';
 import styles from './css/Homecss';
 function HomeScreen({ navigation }) {
@@ -18,8 +18,12 @@ function HomeScreen({ navigation }) {
             placeholder="useless placeholder"
       />
         <View style={[styles.typebtn,{marginTop:20}]}>
-           <Text style={styles.typetextActive}  >All</Text>
-           <Text style={styles.typetext} >Chair</Text>
+     
+        <TouchableOpacity   onPress={() => {navigation.navigate('ProductList')}}>
+            <Text style={styles.typetextActive} >All</Text>
+          </TouchableOpacity>    
+       
+       <Text style={styles.typetext} >Chair</Text>
            <Text style={styles.typetext} >Lamp</Text>
            <Text style={styles.typetext} >Floor</Text>
            <Text style={styles.typetext} >Table</Text>
