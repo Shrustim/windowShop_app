@@ -3,6 +3,7 @@ import { Button, Text, View,Image,TextInput ,ScrollView  ,TouchableOpacity  } fr
 import Neumorphism from 'react-native-neumorphism';
 import styles from './css/productDetailCss';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Colors from './constants/Colors';
 function ProductDetail({ navigation }) {
     return (
       <ScrollView>
@@ -18,7 +19,7 @@ function ProductDetail({ navigation }) {
    </View> 
    </View>
    </View> 
-   <View style={{backgroundColor:"#f5f5f5"}}>
+   <View style={{backgroundColor:"#f5f5f5",marginBottom:60}}>
        <View style={{backgroundColor:"#ffffff",borderTopLeftRadius:60,borderTopRightRadius:60}}>
        <View style={[styles.container,{padding:30}]}>   
        <Text style={styles.productHead} >Irul Chair</Text>
@@ -67,7 +68,7 @@ function ProductDetail({ navigation }) {
       <View style={{flex:1,   flexDirection: "row",paddingTop:20}}>
                        <Text style={styles.productrupees} >205Rs</Text>
                        <TouchableOpacity>
-                       <Text style={styles.buyBtn}  >Add Cart</Text>
+                       <Text style={[styles.buyBtn,{backgroundColor:Colors.primary}]}  >Add Cart</Text>
                        </TouchableOpacity>
                         </View>
 

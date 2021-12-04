@@ -21,7 +21,7 @@ ImgaeT:{
     width: 300,
     marginTop:20,
     marginLeft:25,
-    height: 300,
+    height: 236,
     resizeMode: "contain"
 },
 productHead:{

@@ -19,6 +19,8 @@ export default {
     line: '#282C35',
     gray: '#CCCCCC',
     darkGray: '#999999',
+    orangered:"#FF4500",
+    orange:"#FFA500",
 
     darkOverlayColor: 'rgba(0, 0, 0, 0.4)',
     lightOverlayColor: 'rgba(255, 255, 255, 0.6)',

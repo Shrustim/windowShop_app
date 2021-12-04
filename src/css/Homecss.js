@@ -3,7 +3,8 @@ import {StyleSheet} from 'react-native'
 export default StyleSheet.create({
 
 container: {
-    padding:20
+    padding:20,
+    paddingTop:15
 },
 headd: {
     color:"black",

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Button, Text, View,TouchableOpacity,StyleSheet } from 'react-native';
+import { Button, Text, View,TouchableOpacity,StyleSheet,Image } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,7 @@ import ProductDetail from "./ProductDetail";
 import Colors from './constants/Colors';
 import Register from "./Register";
 import LoginScreen from "./LoginScreen";
+import Header from "./components/Header";
 
 import Cart from "./Cart";
 // import { MainStackNavigator, ContactStackNavigator } from "./StackNavigator";
@@ -52,24 +53,55 @@ function SettingsScreen({ navigation }) {
 
 const HomeStack = createNativeStackNavigator();
 
-function HomeStackScreen() {
+function HomeStackScreen({ navigation }) {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreenn} />
-      <HomeStack.Screen name="ProductList" component={ProductList} />
-      <HomeStack.Screen name="ProductDetail" component={ProductDetail} />
-      <HomeStack.Screen name="Cart" component={Cart} />
+      <HomeStack.Screen name="Home" component={HomeScreenn} 
+        options={{
+          header: () => (
+            <Header main={true} navigation={navigation} />
+              ),
+        }}
+      />
+      <HomeStack.Screen name="ProductList" component={ProductList}
+       options={{
+        header: () => (
+          <Header main={false} navigation={navigation} />
+            ),
+      }} />
+      <HomeStack.Screen name="ProductDetail" component={ProductDetail}
+       options={{
+        header: () => (
+          <Header main={false} navigation={navigation} />
+            ),
+      }} />
+      <HomeStack.Screen name="Cart" component={Cart}
+       options={{
+        header: () => (
+          <Header main={false} navigation={navigation} />
+            ),
+      }} />
     </HomeStack.Navigator>
   );
 }
 
 const SettingsStack = createNativeStackNavigator();
 
-function SettingsStackScreen() {
+function SettingsStackScreen({navigation}) {
   return (
     <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
-      <SettingsStack.Screen name="Details" component={DetailsScreen} />
+      <SettingsStack.Screen name="Settings" component={SettingsScreen}
+         options={{
+          header: () => (
+            <Header main={false} navigation={navigation} />
+              ),
+        }} />
+      <SettingsStack.Screen name="Details" component={DetailsScreen}
+         options={{
+          header: () => (
+            <Header main={false} navigation={navigation} />
+              ),
+        }} />
     </SettingsStack.Navigator>
   );
 }
@@ -135,7 +167,8 @@ const BottomTabNavigator = () => {
           bottom:8,
           right:16,
           left:16,
-          borderRadius:16
+          borderRadius:16,
+          marginTop:0
         },
         // tabBarIcon: ({ focused, color, size }) => {
         //   let iconName;

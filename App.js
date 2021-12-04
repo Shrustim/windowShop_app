@@ -12,6 +12,7 @@ import ProductDetail from "./src/ProductDetail";
 
 import Register from "./src/Register";
 import LoginScreen from "./src/LoginScreen";
+import CustomDrawer from "./src/components/CustomDrawer";
 
 import Cart from "./src/Cart";
 import TabNavigator from "./src/TabNavigator";
@@ -113,7 +114,7 @@ const Drawer = createDrawerNavigator();
 // }
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator screenOptions={{ headerShown: false }}>
+    <Drawer.Navigator screenOptions={{ headerShown: false }} drawerContent={props => <CustomDrawer {...props}  />} >
       <Drawer.Screen name="HomeDrawer" component={TabNavigator} />
       <Drawer.Screen name="ContactDrawer" component={SettingsStackScreen} />
       <Drawer.Screen name="Register" component={Register} />

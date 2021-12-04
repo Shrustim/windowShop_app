@@ -1,14 +1,19 @@
 import  React,{useState} from 'react';
 import { Button, Text, View,Image,TextInput ,ScrollView ,TouchableOpacity   } from 'react-native';
 import Neumorphism from 'react-native-neumorphism';
+import ImageSlider from 'react-native-image-slider';
 import styles from './css/Homecss';
+import Colors from './constants/Colors';
+import HomeImageSlider from "./components/HomeImageSlider";
 function HomeScreen({ navigation }) {
   const [text, onChangeText] = React.useState("Search Here");
     return (
       <ScrollView>
+          <HomeImageSlider/>
          <View style={{backgroundColor:"#81f9ff6b"}}>
         <View style={{borderBottomLeftRadius:60,backgroundColor:"#f5f5f5"}}>
       <View style={styles.container}> 
+    
            <Text style={styles.headd} >Best Decorate</Text>
            <Text style={styles.headdtwo} >Perfect Choice !</Text>
            <TextInput
@@ -20,7 +25,7 @@ function HomeScreen({ navigation }) {
         <View style={[styles.typebtn,{marginTop:20}]}>
      
         <TouchableOpacity   onPress={() => {navigation.navigate('ProductList')}}>
-            <Text style={styles.typetextActive} >All</Text>
+            <Text style={[styles.typetextActive,{backgroundColor:Colors.primary}]} >All</Text>
           </TouchableOpacity>    
        
        <Text style={styles.typetext} >Chair</Text>

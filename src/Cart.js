@@ -3,6 +3,7 @@ import { Button, Text, View,Image,TextInput ,ScrollView,TouchableOpacity    } fr
 import Neumorphism from 'react-native-neumorphism';
 import styles from './css/CartCss';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Colors from './constants/Colors';
 function Cart({ navigation }) {
     return (
       <ScrollView>
@@ -22,7 +23,7 @@ function Cart({ navigation }) {
        <View style={{  flex: 1, flexDirection: "row",  paddingTop:20}}>
        <Text style={[styles.productrupees,{marginLeft:12,marginTop:2,fontSize:20}]} >Total:205Rs</Text>
        <TouchableOpacity style={{marginLeft:96}}>
-                       <Text style={styles.placeOrderBtn}  ><Icon name="shopping-cart" size={19} color="#ffffff" style={{marginBottom:10}} />   Place Order</Text>
+                       <Text style={[styles.placeOrderBtn,{backgroundColor:Colors.orangered}]}  ><Icon name="shopping-cart" size={19} color="#ffffff" style={{marginBottom:10}} />   Place Order</Text>
                        </TouchableOpacity>
          </View>
        <View style={styles.containerTwo}>
@@ -71,7 +72,7 @@ function Cart({ navigation }) {
                             </TouchableOpacity>
                          </View>
                         <TouchableOpacity style={{marginLeft:40,marginRight:10}}>
-                       <Text style={styles.DeleteBtn}  ><Icon name="trash" size={19} color="#ffffff" style={{marginBottom:10}} /></Text>
+                       <Text style={[styles.DeleteBtn,{backgroundColor:Colors.primary}]}  ><Icon name="trash" size={19} color="#ffffff" style={{marginBottom:10}} /></Text>
                        </TouchableOpacity>
                         </View>
                       
@@ -127,7 +128,7 @@ function Cart({ navigation }) {
                             </TouchableOpacity>
                            </View>
                         <TouchableOpacity style={{marginLeft:40,marginRight:10}}>
-                       <Text style={styles.DeleteBtn}  ><Icon name="trash" size={19} color="#ffffff" style={{marginBottom:10}} /></Text>
+                       <Text style={[styles.DeleteBtn,{backgroundColor:Colors.primary}]}  ><Icon name="trash" size={19} color="#ffffff" style={{marginBottom:10}} /></Text>
                        </TouchableOpacity>
                         </View>
                       
@@ -183,7 +184,7 @@ function Cart({ navigation }) {
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity style={{marginLeft:40,marginRight:10}}>
-                       <Text style={styles.DeleteBtn}  ><Icon name="trash" size={19} color="#ffffff" style={{marginBottom:10}} /></Text>
+                       <Text style={[styles.DeleteBtn,,{backgroundColor:Colors.primary}]}  ><Icon name="trash" size={19} color="#ffffff" style={{marginBottom:10}} /></Text>
                        </TouchableOpacity>
                         </View>
                       
