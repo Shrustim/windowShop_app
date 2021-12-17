@@ -1,13 +1,75 @@
 import  React,{useState} from 'react';
-import { Button, Text, View,TextInput,TouchableOpacity,ImageBackground } from 'react-native';
+import { connect } from 'react-redux';
+import api from './api'; 
+import {  Text, View,TextInput,TouchableOpacity,ImageBackground } from 'react-native';
 import styles from './css/RegisterCss';
 import Neumorphism from 'react-native-neumorphism';
 import Icon from 'react-native-vector-icons/FontAwesome';
-function Register({ navigation }) {
-  const [text, setText] = React.useState("Mobile No");
-  const [password, setPassword] = React.useState("Pasword");
-  const [confirmPassword, setConfirPassword] = React.useState("Confirm Pasword");
-  const [name, setName] = React.useState("Name");
+import AsyncStorage from '@react-native-community/async-storage';
+import {signIn  } from './actions'; 
+import Spinner from './components/Spinner';
+function Register(props) {
+  const [mobileNo, setMobileNo] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirPassword] = useState("");
+  const [name, setName] = useState("");
+  const [loading ,setLoading] = useState(false);
+  const [errorMessage ,setErrorMessage] = useState(" ");
+  const  _storeData = async (data) => {
+    try {
+      await AsyncStorage.setItem(
+        'user_values',
+        JSON.stringify(data)
+      );
+    } catch (error) {
+      // Error saving data
+    }
+  };
+  const userregister = async() =>{
+    if(mobileNo === "" || mobileNo.length !== 10 || password === "" || confirmPassword === "" 
+    || name === "" || password !== confirmPassword ){
+     // console.log("error");
+     if(password !== confirmPassword ){
+      setErrorMessage("password and confirm password does not match.");
+    }
+    
+    
+      if(confirmPassword === "" ){
+        setErrorMessage("Please enter confirm password.");
+      }
+      if(password === ""){
+        setErrorMessage("Please enter password.");
+      }
+      
+      if(mobileNo === "" || mobileNo.length !== 10){
+        setErrorMessage("Please enter valid mobile no.");
+      }
+      if(name === "" ){
+        setErrorMessage("Please enter name.");
+      }
+      
+     
+    }else{ 
+      setLoading(true);
+      setErrorMessage("")
+      const res = await api.post('users',{"name":name,"mobileNo":mobileNo,"password":password});
+      if(res.data !== null){
+       await _storeData([res.data])
+       setMobileNo("")
+        setPassword("")
+       
+        setLoading(false);
+        props.signIn(res.data.id);
+      }else{
+        setLoading(false);
+        setErrorMessage("Invalid Mobile no or password");
+      
+      }
+      
+    }
+  
+  }
+ 
     return (
     
        <View style={styles.container}>
@@ -30,30 +92,60 @@ function Register({ navigation }) {
                           style={styles.input}
                           onChangeText={setName}
                           value={name}
-                          placeholder="useless placeholder"
+                          placeholder="Name"
+                          placeholderTextColor = "#000000"
                     /> 
                         <TextInput
                      style={[styles.input,{marginTop:20}]}
-                          onChangeText={setText}
-                          value={text}
-                          placeholder="useless placeholder"
+                          onChangeText={setMobileNo}
+                          value={mobileNo}
+                          placeholder="Mobile No"
+                          placeholderTextColor = "#000000"
                     />  
     
                   <TextInput
                           style={[styles.input,{marginTop:20}]}
                           onChangeText={setPassword}
                           value={password}
-                          placeholder="useless placeholder"
+                          placeholder="Pasword"
+                          placeholderTextColor = "#000000"
                     /> 
                       <TextInput
                           style={[styles.input,{marginTop:20}]}
                           onChangeText={setConfirPassword}
                           value={confirmPassword}
-                          placeholder="useless placeholder"
+                          placeholder="Confirm Pasword"
+                          placeholderTextColor = "#000000"
                     /> 
-                    
+                    <Text style={{textAlign:"center",color:"#ff0707",fontSize:18,marginTop:10,fontWeight:"bold"}}>{errorMessage}</Text>
+                    { loading ? 
+         <TouchableOpacity> 
+         <Neumorphism
+                     lightColor={'#dedddd'}
+                     darkColor={'#dedddd'}
+                     shapeType={'flat'}
+                     radius={20}
+                     style={[styles.loginBtn,{marginTop:20}]}
+                    >
+                    <Text style={{ color:"white",
+           fontSize:19,textAlign:"center",fontWeight:"900"}}> <Spinner/> Loading  </Text>
+         </Neumorphism>
+         </TouchableOpacity>
+         :  <TouchableOpacity onPress={()=>{userregister()}}> 
+         <Neumorphism
+                     lightColor={'#dedddd'}
+                     darkColor={'#dedddd'}
+                     shapeType={'flat'}
+                     radius={20}
+                     style={[styles.loginBtn,{marginTop:20}]}
+                    >
+                    <Text style={{ color:"white",
+           fontSize:19,textAlign:"center",fontWeight:"900"}}> Register </Text>
+         </Neumorphism>
+         </TouchableOpacity>
+      }
 
-      <TouchableOpacity> 
+      {/* <TouchableOpacity> 
       <Neumorphism
                   lightColor={'#dedddd'}
                   darkColor={'#dedddd'}
@@ -64,10 +156,10 @@ function Register({ navigation }) {
                  <Text style={{ color:"white",
         fontSize:19,textAlign:"center",fontWeight:"900"}}>Register</Text>
       </Neumorphism>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
        <Text style={{textAlign:"center",color:"#ffffff",marginTop:10}}>Or</Text>
      
-        <Text style={{textAlign:"center",color:"#ffffff",marginTop:10,fontWeight:"900",fontSize:17}}>Login  Now</Text>
+        <Text onPress={()=> props.navigation.navigate('LoginScreen')} style={{textAlign:"center",color:"#ffffff",marginTop:10,fontWeight:"900",fontSize:17}}>Login  Now</Text>
       
            </View>
                   {/* </Neumorphism> */}
@@ -78,4 +170,8 @@ function Register({ navigation }) {
     );
   }
   
-  export default Register;
+  const mapStateToProps = (state) => {
+    // console.log(state);
+   return {auth : state.auth};
+  }
+  export default connect(mapStateToProps,{signIn })(Register);

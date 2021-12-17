@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React,{useEffect,useState} from 'react';
+import { connect } from 'react-redux';
 import { Button, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import HomeScreenn from "./src/HomeScreen";
 import ProductList from "./src/ProductList";
 import ProductDetail from "./src/ProductDetail";
@@ -27,6 +28,7 @@ function DetailsScreen({ navigation }) {
     </View>
   );
 }
+
 
 // function HomeScreen({ navigation }) {
 //   return (
@@ -117,15 +119,50 @@ const DrawerNavigator = () => {
     <Drawer.Navigator screenOptions={{ headerShown: false }} drawerContent={props => <CustomDrawer {...props}  />} >
       <Drawer.Screen name="HomeDrawer" component={TabNavigator} />
       <Drawer.Screen name="ContactDrawer" component={SettingsStackScreen} />
-      <Drawer.Screen name="Register" component={Register} />
-      <Drawer.Screen name="LoginScreen" component={LoginScreen} />
+      {/* <Drawer.Screen name="Register" component={Register} />
+      <Drawer.Screen name="LoginScreen" component={LoginScreen} /> */}
     </Drawer.Navigator>
   );
 }
-export default function App() {
-  return (
-    <NavigationContainer>
-     <DrawerNavigator  />
-    </NavigationContainer>
-  );
+const App = (props) => {
+ 
+  if(props.auth.isSignedIn === null) { 
+    return (
+      <NavigationContainer>
+          <SettingsStack.Navigator screenOptions={{
+          headerShown: false
+        }}>
+           <SettingsStack.Screen name="LoginScreen" component={LoginScreen} />
+          <SettingsStack.Screen name="Register"  component={Register} />
+         
+        </SettingsStack.Navigator>
+        </NavigationContainer>
+        );
+ }else{ 
+  if(props.auth.isSignedIn === true) {
+        return (
+          <NavigationContainer>
+          <DrawerNavigator  />
+          </NavigationContainer>
+        );
+   }
+  else { 
+      return (
+            <NavigationContainer>
+                <SettingsStack.Navigator screenOptions={{
+                headerShown: false
+              }}>
+                 <SettingsStack.Screen name="LoginScreen" component={LoginScreen} />
+                <SettingsStack.Screen name="Register"  component={Register} />
+               
+              </SettingsStack.Navigator>
+              </NavigationContainer>
+              );
+    }
+  }
 }
+const mapStateToProps = (state) => {
+  // console.log(state);
+ return {auth : state.auth};
+}
+export default connect(mapStateToProps)(App);

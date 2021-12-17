@@ -9,8 +9,20 @@ import {
 import { DrawerContentScrollView,DrawerItemList} from "@react-navigation/drawer";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Colors from '../constants/Colors';
+import AsyncStorage from '@react-native-community/async-storage';
+import { signOut } from '../actions'; 
+import { connect } from 'react-redux';
 
 const CustomDrawer = (props) => {
+  const logout = async() => {
+    try {
+      await AsyncStorage.removeItem('user_values');
+      console.log("item removed user_values")
+      props.signOut();
+    } catch(e) {
+      console.log(e);
+    }
+  }
     return (
         <View style={{flex: 1}}>
           <DrawerContentScrollView
@@ -71,7 +83,7 @@ const CustomDrawer = (props) => {
                     fontFamily: 'Roboto-Medium',
                     marginLeft: 5,
                     color:Colors.dark
-                  }}>
+                  }} onPress={logout}>
                   Sign Out
                 </Text>
               </View>
@@ -80,5 +92,9 @@ const CustomDrawer = (props) => {
         </View>
       );
     };
-export default CustomDrawer;
+const mapStateToProps = (state) => {
+  // console.log(state);
+ return {auth : state.auth};
+}
+export default connect(mapStateToProps,{signOut})(CustomDrawer);
      
