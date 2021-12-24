@@ -2,8 +2,8 @@ import React from 'react'
 import {  Text, View,TouchableOpacity,Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Colors from '../constants/Colors';
-
-const Header = ({navigation,main}) => {
+import { connect } from 'react-redux';
+const Header = ({navigation,main,cart}) => {
     return(
         <View
         style={{
@@ -48,10 +48,13 @@ const Header = ({navigation,main}) => {
           onPress={() => {
             navigation.navigate('Cart')
           }}>
-          <Text><Icon name="shopping-cart" size={19} color={Colors.white} style={{marginBottom:10}} /></Text>
+          <Text style={{color:Colors.white}}><Icon name="shopping-cart" size={19} color={Colors.white} style={{marginBottom:10}} /> ({cart.cart.length > 0  ? cart.cart.length : 0})</Text>
         </TouchableOpacity>
       </View>
     )
 }
-
-export default Header;
+ const mapStateToProps = (state) => {
+  // console.log(state);
+ return {cart : state.cart};
+}
+export default connect(mapStateToProps)(Header);
