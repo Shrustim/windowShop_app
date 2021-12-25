@@ -1,7 +1,8 @@
 // import api from '../api';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   SIGN_IN,
-  SIGN_OUT
+  SIGN_OUT,CHECK_LOGINORNOT
 } from './types';
 
 export const signIn = (userId) => {
@@ -19,12 +20,22 @@ export const signOut = () => {
 
   
 
-// export const createStream =  (formValues) =>  async (dispatch,getState) => {
-//   const { userId } =getState().auth;
-//   const response = await streams.post('/streams',{...formValues,userId});
-//    dispatch({ type: CREATE_STREAM,payload:response.data });
-//    history.push('/');
-// };  
+export const checkUserLoginOrNot =  () =>  async (dispatch,getState) => {
+  var isSignedIn = false;
+  var data=null
+       try {
+          const value = await AsyncStorage.getItem('user_values');
+          if (value !== null) {
+            data=value;
+            isSignedIn=true;
+            console.log("user_values checkUserLoginOrNot",value);
+          }
+        } catch (error) {
+          console.log("user_values error",error);
+        }
+   dispatch({ type: CHECK_LOGINORNOT,payload:isSignedIn,"data":data });
+   
+};  
 
 // export const fetchStreams =  () =>  async dispatch => {
 //   const response = await streams.get('/streams');

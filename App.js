@@ -3,19 +3,11 @@ import { connect } from 'react-redux';
 import { Button, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import AsyncStorage from '@react-native-community/async-storage';
-import HomeScreenn from "./src/HomeScreen";
-import ProductList from "./src/ProductList";
-import ProductDetail from "./src/ProductDetail";
-
+import {checkUserLoginOrNot } from './src/actions'; 
 import Register from "./src/Register";
 import LoginScreen from "./src/LoginScreen";
 import CustomDrawer from "./src/components/CustomDrawer";
-
-import Cart from "./src/Cart";
 import TabNavigator from "./src/TabNavigator";
 function DetailsScreen({ navigation }) {
   return (
@@ -125,7 +117,9 @@ const DrawerNavigator = () => {
   );
 }
 const App = (props) => {
- 
+  useEffect(() => {
+  props.checkUserLoginOrNot();
+ },[]);
   if(props.auth.isSignedIn === null) { 
     return (
       <NavigationContainer>
@@ -165,4 +159,4 @@ const mapStateToProps = (state) => {
   // console.log(state);
  return {auth : state.auth};
 }
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps,{checkUserLoginOrNot})(App);

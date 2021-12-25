@@ -58,8 +58,9 @@ import ListItem from "./components/ListItem";
 // }
 
 function ProductList({route, navigation }) {
-  const { categoryId ,name} = route.params;
+  const { categoryId ,name} = route.params; 
   var headingName= JSON.stringify(name);
+  console.log("json praser", JSON.parse(headingName));
   console.log(headingName ,"headingName");
   const [text, onChangeText] = useState("");
   const [products, setProducts] = useState([]);
@@ -92,7 +93,7 @@ function ProductList({route, navigation }) {
           <View style={{backgroundColor:"#81f9ff6b"}}>
         <View style={{borderBottomLeftRadius:60,backgroundColor:"#f5f5f5"}}>
       <View style={styles.container}> 
-           <Text style={styles.headd} >{headingName}</Text>
+           <Text style={styles.headd} >{JSON.parse(headingName)}</Text>
            <Text style={styles.headdtwo} >Perfect Choice !</Text>
           
            <TextInput

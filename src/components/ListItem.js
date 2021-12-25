@@ -25,7 +25,9 @@ const ListItem = ({ index, animation,navigation,product }) => {
                    style={styles.innerbox}
                 >
                     <View style={{  flex: 1, flexDirection: "row"}}>
-                    <TouchableOpacity   onPress={() => {navigation.navigate('ProductDetail')}}>
+                    <TouchableOpacity   onPress={() => {navigation.navigate('ProductDetail', {
+                    productId: product.id
+                })}}>
                       <Image style={styles.ImgaeT}
                               source={{
                                 uri: product.imageone,
