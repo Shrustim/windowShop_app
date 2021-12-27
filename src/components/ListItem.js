@@ -1,20 +1,25 @@
-import  React from 'react';
-import {  Text, View,Image,TouchableOpacity    } from 'react-native';
+import  React,{useState} from 'react';
+import {  Text, View,Image,TouchableOpacity ,Modal,Pressable  } from 'react-native';
 import Neumorphism from 'react-native-neumorphism';
 import styles from '../css/ProductlistCss';
 import * as Animatable from 'react-native-animatable'
 import Colors from '../constants/Colors';
 import {addtoCart,gettotalamt} from '../actions/cart';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 const ListItem = ({ index, animation,navigation,product,addtoCart,gettotalamt }) => {
+   const [modalVisible, setModalVisible] = useState(false);
   const addToCartt = async() => {
-  
-    var proDuctData = product;
+       var proDuctData = product;
     proDuctData.qty=1;
     proDuctData.subamout=proDuctData.price;
       console.log("addto cart ",proDuctData);
   await addtoCart(proDuctData);
   gettotalamt();
+  setModalVisible(true);
+  setTimeout(() => {
+     setModalVisible(false);
+  }, 1500);
   }
   return (
     <Animatable.View
@@ -22,6 +27,21 @@ const ListItem = ({ index, animation,navigation,product,addtoCart,gettotalamt })
       duration={1000}
       delay={index * 300}
     >
+       <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+           setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}><Icon name="shopping-cart" size={19} color={Colors.white}/> Product add to cart successfully.!</Text>
+           
+          </View>
+        </View>
+      </Modal>
        <View
                   style={styles.box}
                 >

@@ -102,5 +102,35 @@ productrupees:{
   fontSize:16,
   fontWeight:"bold",
   marginTop:10
-}
+},
+
+centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 10,
+    backgroundColor: "black",
+    borderRadius: 20,
+    padding: 25,
+    alignItems: "center",
+    shadowColor: "#000",
+
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalText: {
+    marginBottom: 5,
+    textAlign: "center",
+    color:"white",
+    fontSize:15
+  }
+
 });
