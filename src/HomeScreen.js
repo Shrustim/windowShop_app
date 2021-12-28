@@ -13,7 +13,6 @@ function HomeScreen({ navigation }) {
 const getCategory = async() => {
   const res = await api.get('categories');
   if(res.data.length > 0){
-    console.log("getCategory",res.data);
     setCategory(res.data);
   }
 }

@@ -10,6 +10,7 @@ export default (state = INITIAL_STATE ,action ) => {
          case SIGN_OUT :
            return{ ...state , isSignedIn : false,userId :null };
            case CHECK_LOGINORNOT :
+
             return { ...state , isSignedIn : action.payload ,userId : action.data[0].id };
        default :
             return state;   

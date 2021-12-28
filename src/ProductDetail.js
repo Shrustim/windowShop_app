@@ -1,33 +1,63 @@
 import  React,{useState,useEffect} from 'react';
-import { Button, Text, View,Image,TextInput ,ScrollView  ,TouchableOpacity  } from 'react-native';
+import { connect } from 'react-redux';
+import { Button, Text, View,Image,TextInput ,ScrollView ,Modal ,TouchableOpacity  } from 'react-native';
 import Neumorphism from 'react-native-neumorphism';
 import styles from './css/productDetailCss';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Colors from './constants/Colors';
 import api from './api'; 
 import Spinner from './components/Spinner';
-function ProductDetail({route, navigation }) {
+import {addtoCart,gettotalamt} from './actions/cart';
+function ProductDetail({route, navigation,addtoCart,gettotalamt }) {
   const { productId } = route.params; 
   var productIdd= JSON.stringify(productId);
-  console.log("json praser productId", JSON.parse(productIdd));
+    const [modalVisible, setModalVisible] = useState(false);
   const [product, setProduct] = useState([]);
   const [imagee, setImagee] = useState('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4a45cb35-c77c-4005-aa56-78a10cc4d85d/d31f04u-ce90a02c-c2aa-4d54-acce-9bad1d82789e.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzRhNDVjYjM1LWM3N2MtNDAwNS1hYTU2LTc4YTEwY2M0ZDg1ZFwvZDMxZjA0dS1jZTkwYTAyYy1jMmFhLTRkNTQtYWNjZS05YmFkMWQ4Mjc4OWUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.fBMCQ8_PT3gleMTAXykLMBBE_vjuLWKs-CKAqDnFtjk');
   const getproductById = async() => {
   
       const res = await api.get('products?filter=%7B%22where%22%3A%20%7B%22id%22%3A%20'+JSON.parse(productIdd)+'%7D%7D');
       if(res.data.length > 0){
-        console.log("getproductById",res.data);
         setProduct(res.data);
         setImagee(res.data[0].imageone);
       }
    
-  }
+  } 
 
   useEffect(() => {
    getproductById();
   },[]);
+
+   
+  const addToCartt = async() => {
+       var proDuctData = product[0];
+    proDuctData.qty=1;
+    proDuctData.subamout=proDuctData.price;
+   await addtoCart(proDuctData);
+  gettotalamt();
+  setModalVisible(true);
+  setTimeout(() => {
+     setModalVisible(false);
+       navigation.navigate('Cart')
+  }, 1500);
+  }
     return (
       <ScrollView>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+           setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}><Icon name="shopping-cart" size={19} color={Colors.white}/> Product add to cart successfully.!</Text>
+           
+          </View>
+        </View>
+      </Modal>
         {
         product.length > 0 ? 
          <>
@@ -97,7 +127,7 @@ function ProductDetail({route, navigation }) {
 
       <View style={{flex:1,   flexDirection: "row",paddingTop:20}}>
                        <Text style={styles.productrupees} >{ product[0].price}Rs</Text>
-                       <TouchableOpacity>
+                       <TouchableOpacity  onPress={() => {addToCartt()}}>
                        <Text style={[styles.buyBtn,{backgroundColor:Colors.primary}]}  >Add Cart</Text>
                        </TouchableOpacity>
                         </View>
@@ -122,4 +152,8 @@ function ProductDetail({route, navigation }) {
    </ScrollView>
     );
   }
-  export default ProductDetail;
+  const mapStateToProps = (state) => {
+  // console.log(state);
+ return {cart : state.cart};
+}
+export default connect(mapStateToProps,{addtoCart,gettotalamt})(ProductDetail);

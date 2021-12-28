@@ -60,14 +60,10 @@ import ListItem from "./components/ListItem";
 function ProductList({route, navigation }) {
   const { categoryId ,name} = route.params; 
   var headingName= JSON.stringify(name);
-  console.log("json praser", JSON.parse(headingName));
-  console.log(headingName ,"headingName");
   const [text, onChangeText] = useState("");
   const [products, setProducts] = useState([]);
   const animation = Animations[Math.floor(Math.random() * Animations.length)]
-  console.log(animation);
   const getproductAll = async() => {
-    console.log("categoryId",JSON.stringify(categoryId));
     var id= JSON.stringify(categoryId);
  
     if(id === "0"){

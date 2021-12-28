@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreenn from "./HomeScreen";
 import ProductList from "./ProductList";
 import ProductDetail from "./ProductDetail";
+import PlaceOrder from "./PlaceOrder";
 import Colors from './constants/Colors';
 import Register from "./Register";
 import LoginScreen from "./LoginScreen";
@@ -81,6 +82,13 @@ function HomeStackScreen({ navigation }) {
           <Header main={false} navigation={navigation} />
             ),
       }} />
+       <HomeStack.Screen name="PlaceOrder" component={PlaceOrder}
+       options={{
+        header: () => (
+          <Header main={false} navigation={navigation} />
+            ),
+      }} />
+      
     </HomeStack.Navigator>
   );
 }

@@ -9,8 +9,7 @@ import { connect } from 'react-redux';
 import { changeCart,increaseCart,descreaseCart,removefromCart,gettotalamt} from "../actions/cart";
 function CartItem({ cartProInfo}) {
       const dispatch = useDispatch();
-     console.log("cart cartProInfo ",cartProInfo);
-
+  
  const incrementPro = (id) =>{
      dispatch(increaseCart(id));
      dispatch(gettotalamt());

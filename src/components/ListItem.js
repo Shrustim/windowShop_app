@@ -13,7 +13,6 @@ const ListItem = ({ index, animation,navigation,product,addtoCart,gettotalamt })
        var proDuctData = product;
     proDuctData.qty=1;
     proDuctData.subamout=proDuctData.price;
-      console.log("addto cart ",proDuctData);
   await addtoCart(proDuctData);
   gettotalamt();
   setModalVisible(true);

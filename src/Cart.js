@@ -8,9 +8,6 @@ import { connect } from 'react-redux';
 import CartItem from './components/CartItem';
 
 function Cart({ navigation,cart }) {
-     console.log("cart ammount ",cart.amount);
-       console.log("cart total ",cart.total);
-    console.log("cart values ",cart.cart);
     return (
       <ScrollView>
           <View style={{backgroundColor:"#81f9ff6b"}}>
@@ -29,7 +26,7 @@ function Cart({ navigation,cart }) {
        <View style={{  flex: 1, flexDirection: "row",  paddingTop:20}}>
          { cart.cart.length > 0 ?  <>
        <Text style={[styles.productrupees,{marginLeft:12,marginTop:2,fontSize:20}]} >Total:{cart.total}Rs</Text>
-       <TouchableOpacity style={{marginLeft:96}}>
+       <TouchableOpacity style={{marginLeft:96}} onPress={() =>  navigation.navigate('PlaceOrder')}>
                        <Text style={[styles.placeOrderBtn,{backgroundColor:Colors.orangered}]}  ><Icon name="shopping-cart" size={19} color="#ffffff" style={{marginBottom:10}} />   Place Order</Text>
                        </TouchableOpacity>
                        </> : <></> }
