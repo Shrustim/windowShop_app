@@ -1,26 +1,36 @@
 import  React,{useState,useEffect} from 'react';
-import { Dimensions, Text, View,Image,TextInput ,ScrollView ,TouchableOpacity   } from 'react-native';
+import { Dimensions, Text, View,Image,TextInput ,Modal,ScrollView ,TouchableOpacity   } from 'react-native';
 import Neumorphism from 'react-native-neumorphism';
 import styles from './css/PlaceOrder';
 import Colors from './constants/Colors';
 import Spinner from './components/Spinner';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import api from './api'; 
+import { useSelector ,useDispatch } from "react-redux"; 
 import RadioButton from './components/RadioButton';
+import { changeCart} from "./actions/cart";
 import { connect } from 'react-redux';
 function PlaceOrder({ navigation ,cart,userId}) {
+  // if(cart.cart.length === 0){
+  //   navigation.navigate('Cart')
+  // }
+    const dispatch = useDispatch();
+   const [modalVisible, setModalVisible] = useState(false);
+   const [errorMessage ,setErrorMessage] = useState("");
+    const [erroraddressMessage ,setErroraddressMessage] = useState("");
   const [name, onChangeName] = useState("");
   const [mobileNo, onChangeMobileNo] = useState("");
   const [addess, onChangeAddress] = useState("");
   const [pincode, onChangePincode] = useState("");
+   const [loading ,setLoading] = useState(false);
 const getUserInfo = async() =>{
      const res = await api.get('users/'+userId);
       if(res.data){
          console.log("getUserInfo",res.data);
          onChangeName(res.data.name);
-          onChangeMobileNo(res.data.mobileNo);
-           onChangeAddress(res.data.address);
-            onChangePincode(res.data.pincode);
+         onChangeMobileNo(res.data.mobileNo);
+         onChangeAddress(res.data.address);
+         onChangePincode(res.data.pincode);
       }
 }
 useEffect(()=> {
@@ -32,9 +42,21 @@ const resr = await api.post('orderproducts',payload);
 }
 
 const placeOrder = async() => {
-  if(pincode === "" || pincode === null) {
-
+  if(pincode === "" || pincode === null || addess === "" || addess === null) {
+      if(pincode === "" || pincode === null){
+       setErrorMessage("Please enter pincode.");
+      }else{
+        setErrorMessage("");
+      }
+      if(addess === "" || addess === null){
+        setErroraddressMessage("Please enter address.");
+      }else{
+         setErroraddressMessage("");
+      }
   }else{
+      setLoading(true);
+    setErrorMessage("");
+    setErroraddressMessage("");
     const res = await api.post('orders',{"userId":userId,"totalPrice":cart.total,"qty":cart.cart.length,"address":addess,"pincode":parseInt(pincode)});
       if(res.data !== null){
           cart.cart.map((i, index) => {
@@ -42,8 +64,16 @@ const placeOrder = async() => {
               "totalPrice":i.subamout,"qty":i.qty,"price":i.price}
                InsertdatainorderProducts(payload);
           })
-
+           dispatch(changeCart());
           console.log("place order successfully");
+           setModalVisible(true);
+            setTimeout(() => {
+               setModalVisible(false);
+                 setLoading(false);
+                 navigation.navigate('OrderDetail', {
+                    orderId: res.data.id
+                 })
+            }, 1500);
       }
   }
 }
@@ -51,6 +81,22 @@ const placeOrder = async() => {
 
     return (
       <ScrollView style={{marginBottom:50}}>
+       <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+           setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}><Icon name="shopping-cart" size={19} color={Colors.white}/> Place order  successfully.!</Text>
+           
+          </View>
+        </View>
+      </Modal>
+
          <View style={{backgroundColor:"#81f9ff6b"}}>
         <View style={{borderBottomLeftRadius:60,backgroundColor:"#f5f5f5"}}>
       <View style={styles.container}> 
@@ -81,6 +127,7 @@ const placeOrder = async() => {
             placeholder="Address"
             placeholderTextColor = "#000000"
       />
+       {erroraddressMessage !== "" ?<Text style={{color:"#ff0707",fontSize:15,marginTop:10,fontWeight:"bold"}}>{erroraddressMessage}</Text> : null} 
        <Text style={styles.inputLablee} >Pincode</Text>
           <TextInput
             style={styles.input}
@@ -89,7 +136,7 @@ const placeOrder = async() => {
             placeholder="Pincode"
             placeholderTextColor = "#000000"
       />
-       
+        {errorMessage !== "" ?<Text style={{color:"#ff0707",fontSize:15,marginTop:10,fontWeight:"bold"}}>{errorMessage}</Text> : null} 
        <View style={{flex:1, flexDirection: "row",marginTop:15}}>
           <RadioButton selected={true} />
           <Text style={styles.inputLablee,{marginLeft:10,marginTop:1,color:Colors.black}} >Cash On Delivery</Text>
@@ -115,9 +162,14 @@ const placeOrder = async() => {
 
           </View>
       
-       <TouchableOpacity style={{marginLeft:96}} onPress={() =>  placeOrder()}>
+        { loading ? 
+             <TouchableOpacity style={{marginLeft:96}} onPress={() =>  placeOrder()}>
+                       <Text style={[styles.placeOrderBtn,{backgroundColor:Colors.orangered}]}  ><Spinner color="#ffffff" styles={{marginLeft:20}}  />  Wait</Text>
+                       </TouchableOpacity>
+         :   <TouchableOpacity style={{marginLeft:96}} onPress={() =>  placeOrder()}>
                        <Text style={[styles.placeOrderBtn,{backgroundColor:Colors.orangered}]}  ><Icon name="shopping-cart" size={19} color="#ffffff" style={{marginBottom:10}} />   Place Order</Text>
                        </TouchableOpacity>
+      }
                        </> : <></> }
          </View>
                </View>  

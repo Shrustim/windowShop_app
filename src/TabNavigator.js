@@ -12,7 +12,8 @@ import Colors from './constants/Colors';
 import Register from "./Register";
 import LoginScreen from "./LoginScreen";
 import Header from "./components/Header";
-
+import OrderDetail from "./OrderDetail";
+import OrderList from "./OrderList";
 import Cart from "./Cart";
 // import { MainStackNavigator, ContactStackNavigator } from "./StackNavigator";
 
@@ -88,6 +89,13 @@ function HomeStackScreen({ navigation }) {
           <Header main={false} navigation={navigation} />
             ),
       }} />
+     <HomeStack.Screen name="OrderDetail" component={OrderDetail}
+       options={{
+        header: () => (
+          <Header main={false} navigation={navigation} />
+            ),
+      }} />
+
       
     </HomeStack.Navigator>
   );
@@ -98,7 +106,7 @@ const SettingsStack = createNativeStackNavigator();
 function SettingsStackScreen({navigation}) {
   return (
     <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Settings" component={SettingsScreen}
+      <SettingsStack.Screen name="OrderList" component={OrderList}
          options={{
           header: () => (
             <Header main={false} navigation={navigation} />
@@ -178,23 +186,7 @@ const BottomTabNavigator = () => {
           borderRadius:16,
           marginTop:0
         },
-        // tabBarIcon: ({ focused, color, size }) => {
-        //   let iconName;
-  
-        //   if (route.name === 'Home') {
-        //     iconName = focused
-        //       ? 'home'
-        //       : 'home';
-        //   } else if (route.name === 'Profile') {
-        //     iconName = focused ? 'user' : 'user';
-        //   }
-        //   else if (route.name === 'Orders') {
-        //     iconName = focused ? 'list' : 'list';
-        //   }
-  
-        //   // You can return any component that you like here!
-        //   return <Icon name={iconName} size={size} color={color} /> ;
-        // },
+      
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
         headerShown: false 
