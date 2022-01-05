@@ -64,8 +64,8 @@ function OrderList({ navigation ,userId}) {
                         <View style={styles.proBox}>
                        <View style={{flex:1,   flexDirection: "row",paddingTop:6}}>
                         <Text style={styles.productrupees} > <Text style={{fontWeight:'400'}}>Order No:</Text> #0{i.id}</Text>
-                        <Text style={styles.productrupees} ><Text style={{fontWeight:'400'}}>Order Date:</Text> 2/12/2010</Text>
-                        <TouchableOpacity  onPress={() =>    navigation.navigate('OrderDetail', {
+                        <Text style={styles.orderDatee}  ><Text style={{fontWeight:'400'}}>Order Date:</Text> {i.orderDate}</Text>
+                        <TouchableOpacity  onPress={() =>    navigation.navigate('OrderDetailDD', {
                     orderId:i.id
                  })}><Text style={styles.productrupees} ><Icon name="pencil" size={19} color={Colors.purple}/></Text></TouchableOpacity>
                       </View> 

@@ -14,6 +14,7 @@ import LoginScreen from "./LoginScreen";
 import Header from "./components/Header";
 import OrderDetail from "./OrderDetail";
 import OrderList from "./OrderList";
+import ProfileScreen from "./ProfileScreen";
 import Cart from "./Cart";
 // import { MainStackNavigator, ContactStackNavigator } from "./StackNavigator";
 
@@ -112,6 +113,13 @@ function SettingsStackScreen({navigation}) {
             <Header main={false} navigation={navigation} />
               ),
         }} />
+          <SettingsStack.Screen name="OrderDetailDD" component={OrderDetail}
+       options={{
+        header: () => (
+          <Header main={false} navigation={navigation} />
+            ),
+      }} />
+
       <SettingsStack.Screen name="Details" component={DetailsScreen}
          options={{
           header: () => (
@@ -121,6 +129,23 @@ function SettingsStackScreen({navigation}) {
     </SettingsStack.Navigator>
   );
 }
+
+const ProfileStack = createNativeStackNavigator();
+
+function ProfileStackScreen({navigation}) {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen}
+         options={{
+          header: () => (
+            <Header main={false} navigation={navigation} />
+              ),
+        }} />
+        
+    </ProfileStack.Navigator>
+  );
+}
+
 
 const Tab = createBottomTabNavigator();
 const animate1 = { 0: { scale: .5, translateY: 7 }, .92: { translateY: -34 }, 1: { scale: 1.2, translateY: -24 } }
@@ -200,17 +225,18 @@ const BottomTabNavigator = () => {
         tabBarButton: (props) => <TabButton {...props} item={"home"} lablee="Home" />
       }}
        />
-      <Tab.Screen name="Profile" component={SettingsStackScreen}
-       options={{
-        tabBarShowLabel: false,
-        // tabBarIcon: ({color,focused,size}) => (<Icon name={"user"} size={size} color={color} />),
-        tabBarButton: (props) => <TabButton {...props} item={"user"} lablee="Profile" />
-      }} />
+    
       <Tab.Screen name="Orders" component={SettingsStackScreen}
        options={{
         tabBarShowLabel: false,
         // tabBarIcon: ({color,focused,size}) =>( <Icon name={"list"} size={size} color={color} />),
         tabBarButton: (props) => <TabButton {...props} item={"list"} lablee="Orders" />
+      }} />
+        <Tab.Screen name="Profile" component={ProfileStackScreen}
+       options={{
+        tabBarShowLabel: false,
+        // tabBarIcon: ({color,focused,size}) => (<Icon name={"user"} size={size} color={color} />),
+        tabBarButton: (props) => <TabButton {...props} item={"user"} lablee="Profile" />
       }} />
     </Tab.Navigator>
     )

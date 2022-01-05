@@ -28,7 +28,7 @@ function OrderDetail({ route,navigation,userId }) {
   } 
    useEffect(() => {
    getOrderDetailById();
-  },[]);
+  },[ route.params]);
  
   console.log("orderId order detail",orderId);
     return (
@@ -50,7 +50,7 @@ function OrderDetail({ route,navigation,userId }) {
         <>
          <View style={{  flex: 1, flexDirection: "row",  paddingTop:20}}>
          <Text style={[styles.productrupees,{marginLeft:12,marginTop:2,fontSize:18}]} ><Text style={{fontWeight:"400"}}>Order No:</Text> #0{orderDetail[0].orderId}</Text>
-          <Text style={[styles.productrupees,{marginLeft:12,marginTop:2,fontSize:18}]} ><Text style={{fontWeight:"400"}}>Order Date:</Text> 22/12/2021</Text>
+          <Text style={[styles.productrupees,{marginLeft:12,marginTop:2,fontSize:18}]} ><Text style={{fontWeight:"400"}}>Order Date:</Text> {orderDetail[0].orderDate}</Text>
          </View>
          <View style={{  flex: 1, flexDirection: "row",  paddingTop:5}}>
            <Text style={[styles.productrupees,{marginLeft:12,marginTop:2,fontSize:18}]} ><Text style={{fontWeight:"400"}}>Total:</Text> {totalAmt}Rs</Text>
@@ -61,7 +61,7 @@ function OrderDetail({ route,navigation,userId }) {
                    <>
                       {orderDetail.map((i, index) => {
                  return (
-                   <View style={styles.box} >
+                   <View style={styles.box} key={index} >
                   <Neumorphism
                   lightColor={'#dedddd'}
                   darkColor={'#76c2ffb8'}
@@ -75,7 +75,7 @@ function OrderDetail({ route,navigation,userId }) {
                     <View style={{  flex: 1, flexDirection: "row"}}>
                     <Image style={styles.ImgaeT}
                              source={{
-                              uri: "https://likeelectronic.com/shopping_cart_empty.jpg",
+                              uri: i.imageone,
                             }}
                       />
                       <View style={styles.proBox}>

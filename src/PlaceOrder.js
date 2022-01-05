@@ -57,11 +57,13 @@ const placeOrder = async() => {
       setLoading(true);
     setErrorMessage("");
     setErroraddressMessage("");
-    const res = await api.post('orders',{"userId":userId,"totalPrice":cart.total,"qty":cart.cart.length,"address":addess,"pincode":parseInt(pincode)});
+    var todayDate = new Date().toISOString().slice(0, 10);
+    const res = await api.post('orders',{"userId":userId,"totalPrice":cart.total,"qty":cart.cart.length,
+      "address":addess,"pincode":parseInt(pincode),"orderDate":todayDate});
       if(res.data !== null){
           cart.cart.map((i, index) => {
               const payload = {"orderId":res.data.id,"userId":userId,"productId":i.id,
-              "totalPrice":i.subamout,"qty":i.qty,"price":i.price}
+              "totalPrice":i.subamout,"qty":i.qty,"price":i.price,"orderDate":todayDate}
                InsertdatainorderProducts(payload);
           })
            dispatch(changeCart());

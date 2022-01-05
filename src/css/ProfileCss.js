@@ -3,10 +3,11 @@ import {StyleSheet} from 'react-native'
 export default StyleSheet.create({
 
 container: {
-    padding:20
+    padding:40
+    
 },
 headd: {
-    color:"black",
+    color:"white",
     fontWeight: "700",
     fontSize:25,
 
@@ -51,23 +52,23 @@ containerTwo: {
     marginTop: 8,
     flexWrap:'wrap',
     flexDirection: "row",
-  
+    paddingTop:30
   },
   box: {
     width: 350,
-    height: 110,
+    height: 180,
     padding:10,
     marginBottom:10
   },
   innerbox:{
     width: 350,
-    height: 100,
+    height: 170,
     backgroundColor: '#ffffff'
   },
   ImgaeT:{
-    width: 125,
+    width: 145,
     marginTop:30,
-    height: 90,
+    height: 110,
     resizeMode: "contain"
 },
 productHead:{
@@ -84,52 +85,53 @@ productdescrip:{
   fontSize:12,
 },
 proBox:
-{width:185, height: 90,paddingLeft:1,paddingTop:13,paddingBottom:5,paddingRight:5
+{width:185, height: 170,paddingLeft:1,paddingTop:13,paddingBottom:5,paddingRight:5
 },
 buyBtn:{
     color:"white",
     fontSize:14,
     backgroundColor:"#403b58",
     height:35,
-    width:80 ,borderRadius:30,
+    width:100 ,borderRadius:30,
     textAlign: "center",
     paddingTop:7,
-    marginLeft:30
+    marginTop:20
 
 },
 productrupees:{
   color:"black",
   fontSize:16,
   fontWeight:"bold",
-  marginLeft:10
+  marginTop:10
 },
-orderDatee:{
-  color:"black",
-  fontSize:14,
-  fontWeight:"bold",
-  marginLeft:10,
-  width:155
-},
-DeleteBtn:{
-  color:"white",
-  fontSize:14,
-  backgroundColor:"#403b58",
-  height:35,
-  width:40 ,borderRadius:30,
-  textAlign: "center",
-  paddingTop:7,
-  marginLeft:0
 
-},
-placeOrderBtn:{
-  color:"white",
-  fontSize:14,
-  backgroundColor:"#403b58",
-  height:35,
-  width:120 ,borderRadius:30,
-  textAlign: "center",
-  paddingTop:7,
-  marginLeft:0
+centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 10,
+    backgroundColor: "black",
+    borderRadius: 20,
+    padding: 25,
+    alignItems: "center",
+    shadowColor: "#000",
 
-},
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalText: {
+    marginBottom: 5,
+    textAlign: "center",
+    color:"white",
+    fontSize:15
+  }
+
 });
