@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import { connect } from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 import { Button, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -118,7 +119,10 @@ const DrawerNavigator = () => {
   );
 }
 const App = (props) => {
+
+
   useEffect(() => {
+     SplashScreen.hide();
   props.checkUserLoginOrNot();
  },[]);
   if(props.auth.isSignedIn === null) { 
