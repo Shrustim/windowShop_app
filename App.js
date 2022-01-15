@@ -9,6 +9,7 @@ import Register from "./src/Register";
 import LoginScreen from "./src/LoginScreen";
 import CustomDrawer from "./src/components/CustomDrawer";
 import TabNavigator from "./src/TabNavigator";
+import Loading from "./src/Loading";
 function DetailsScreen({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -122,15 +123,8 @@ const App = (props) => {
  },[]);
   if(props.auth.isSignedIn === null) { 
     return (
-      <NavigationContainer>
-          <SettingsStack.Navigator screenOptions={{
-          headerShown: false
-        }}>
-           <SettingsStack.Screen name="LoginScreen" component={LoginScreen} />
-          <SettingsStack.Screen name="Register"  component={Register} />
-         
-        </SettingsStack.Navigator>
-        </NavigationContainer>
+    <Loading/>
+   
         );
  }else{ 
   if(props.auth.isSignedIn === true) {

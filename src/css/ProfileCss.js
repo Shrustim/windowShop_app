@@ -21,10 +21,14 @@ headdtwo: {
 input: {
     height: 40,
     marginTop: 12,
-    padding: 10,color:"black",
+    padding: 10,color:"red",
     borderRadius:10,
-    backgroundColor:"#ffffff"
+    backgroundColor:"#ffffff",
+    borderColor:"red"
   },
+  inputLablee:{
+    color:"black",marginTop:5
+},
 typetextActive:{
     color:"white",
     fontSize:10,
@@ -84,6 +88,7 @@ productdescrip:{
   color:"#666564",
   fontSize:12,
 },
+
 proBox:
 {width:185, height: 170,paddingLeft:1,paddingTop:13,paddingBottom:5,paddingRight:5
 },
